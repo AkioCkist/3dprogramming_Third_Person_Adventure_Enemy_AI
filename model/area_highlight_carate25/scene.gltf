@@ -1,0 +1,413 @@
+{
+  "accessors": [
+    {
+      "bufferView": 2,
+      "componentType": 5126,
+      "count": 63,
+      "max": [
+        33.36339569091797,
+        21.889551162719727,
+        33.363399505615234
+      ],
+      "min": [
+        -33.363399505615234,
+        -33.36339569091797,
+        -33.36341094970703
+      ],
+      "type": "VEC3"
+    },
+    {
+      "bufferView": 2,
+      "byteOffset": 756,
+      "componentType": 5126,
+      "count": 63,
+      "max": [
+        1.0,
+        1.0,
+        1.0
+      ],
+      "min": [
+        -1.0,
+        0.0,
+        -1.0
+      ],
+      "type": "VEC3"
+    },
+    {
+      "bufferView": 3,
+      "componentType": 5126,
+      "count": 63,
+      "max": [
+        1.0,
+        4.3807482143165544e-05,
+        1.0,
+        1.0
+      ],
+      "min": [
+        -1.0,
+        -4.006756385011023e-11,
+        -1.0,
+        1.0
+      ],
+      "type": "VEC4"
+    },
+    {
+      "bufferView": 1,
+      "componentType": 5126,
+      "count": 63,
+      "max": [
+        1.0000001192092896,
+        1.0000813007354736
+      ],
+      "min": [
+        -2.1517276763916016e-05,
+        -8.118152618408203e-05
+      ],
+      "type": "VEC2"
+    },
+    {
+      "bufferView": 1,
+      "byteOffset": 504,
+      "componentType": 5126,
+      "count": 63,
+      "max": [
+        1.0000001192092896,
+        1.0000813007354736
+      ],
+      "min": [
+        -2.1517276763916016e-05,
+        -8.118152618408203e-05
+      ],
+      "type": "VEC2"
+    },
+    {
+      "bufferView": 1,
+      "byteOffset": 1008,
+      "componentType": 5126,
+      "count": 63,
+      "max": [
+        1.0000001192092896,
+        1.0000813007354736
+      ],
+      "min": [
+        -2.1517276763916016e-05,
+        -8.118152618408203e-05
+      ],
+      "type": "VEC2"
+    },
+    {
+      "bufferView": 1,
+      "byteOffset": 1512,
+      "componentType": 5126,
+      "count": 63,
+      "max": [
+        1.0000001192092896,
+        1.0000813007354736
+      ],
+      "min": [
+        -2.1517276763916016e-05,
+        -8.118152618408203e-05
+      ],
+      "type": "VEC2"
+    },
+    {
+      "bufferView": 1,
+      "byteOffset": 2016,
+      "componentType": 5126,
+      "count": 63,
+      "max": [
+        1.0000001192092896,
+        1.0000813007354736
+      ],
+      "min": [
+        -2.1517276763916016e-05,
+        -8.118152618408203e-05
+      ],
+      "type": "VEC2"
+    },
+    {
+      "bufferView": 1,
+      "byteOffset": 2520,
+      "componentType": 5126,
+      "count": 63,
+      "max": [
+        1.0000001192092896,
+        1.0000813007354736
+      ],
+      "min": [
+        -2.1517276763916016e-05,
+        -8.118152618408203e-05
+      ],
+      "type": "VEC2"
+    },
+    {
+      "bufferView": 0,
+      "componentType": 5125,
+      "count": 180,
+      "type": "SCALAR"
+    }
+  ],
+  "asset": {
+    "extras": {
+      "author": "fwild (https://sketchfab.com/fwild)",
+      "license": "CC-BY-4.0 (http://creativecommons.org/licenses/by/4.0/)",
+      "source": "https://sketchfab.com/3d-models/area-highlight-carate25-967928e18bcb4aecb304e5416a86c24d",
+      "title": "Area Highlight carate25"
+    },
+    "generator": "Sketchfab-16.72.0",
+    "version": "2.0"
+  },
+  "bufferViews": [
+    {
+      "buffer": 0,
+      "byteLength": 720,
+      "name": "floatBufferViews",
+      "target": 34963
+    },
+    {
+      "buffer": 0,
+      "byteLength": 3024,
+      "byteOffset": 720,
+      "byteStride": 8,
+      "name": "floatBufferViews",
+      "target": 34962
+    },
+    {
+      "buffer": 0,
+      "byteLength": 1512,
+      "byteOffset": 3744,
+      "byteStride": 12,
+      "name": "floatBufferViews",
+      "target": 34962
+    },
+    {
+      "buffer": 0,
+      "byteLength": 1008,
+      "byteOffset": 5256,
+      "byteStride": 16,
+      "name": "floatBufferViews",
+      "target": 34962
+    }
+  ],
+  "buffers": [
+    {
+      "byteLength": 6264,
+      "uri": "scene.bin"
+    }
+  ],
+  "images": [
+    {
+      "uri": "textures/Area_Highlight_Mat_baseColor.png"
+    },
+    {
+      "uri": "textures/Area_Highlight_Mat_metallicRoughness.png"
+    },
+    {
+      "uri": "textures/Area_Highlight_Mat_emissive.png"
+    },
+    {
+      "uri": "textures/Area_Highlight_Mat_normal.png"
+    }
+  ],
+  "materials": [
+    {
+      "alphaMode": "BLEND",
+      "doubleSided": true,
+      "emissiveFactor": [
+        1.0,
+        1.0,
+        1.0
+      ],
+      "emissiveTexture": {
+        "index": 2
+      },
+      "name": "Area_Highlight_Mat",
+      "normalTexture": {
+        "index": 3
+      },
+      "occlusionTexture": {
+        "index": 1
+      },
+      "pbrMetallicRoughness": {
+        "baseColorTexture": {
+          "index": 0
+        },
+        "metallicRoughnessTexture": {
+          "index": 1
+        }
+      }
+    }
+  ],
+  "meshes": [
+    {
+      "name": "Object_0",
+      "primitives": [
+        {
+          "attributes": {
+            "NORMAL": 1,
+            "POSITION": 0,
+            "TANGENT": 2,
+            "TEXCOORD_0": 3,
+            "TEXCOORD_1": 4,
+            "TEXCOORD_2": 5,
+            "TEXCOORD_3": 6,
+            "TEXCOORD_4": 7,
+            "TEXCOORD_5": 8
+          },
+          "indices": 9,
+          "material": 0,
+          "mode": 4
+        }
+      ]
+    }
+  ],
+  "nodes": [
+    {
+      "children": [
+        1
+      ],
+      "matrix": [
+        0.1666666716337204,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        3.700743525707937e-17,
+        -0.1666666716337204,
+        0.0,
+        0.0,
+        0.1666666716337204,
+        3.700743525707937e-17,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ],
+      "name": "Sketchfab_model"
+    },
+    {
+      "children": [
+        2
+      ],
+      "name": "root"
+    },
+    {
+      "children": [
+        3
+      ],
+      "matrix": [
+        1.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        2.220446049250313e-16,
+        1.0,
+        0.0,
+        0.0,
+        -1.0,
+        2.220446049250313e-16,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ],
+      "name": "GLTF_SceneRootNode"
+    },
+    {
+      "children": [
+        4
+      ],
+      "matrix": [
+        0.009999999776482582,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.009999999776482582,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.009999999776482582,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ],
+      "name": "RootNode_0"
+    },
+    {
+      "children": [
+        5
+      ],
+      "matrix": [
+        1.610286831855774,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        1.610286831855774,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        1.610286831855774,
+        0.0,
+        2.427249228276196e-06,
+        54.72462463378906,
+        3.640873728727456e-06,
+        1.0
+      ],
+      "name": "Area_Highlight_1"
+    },
+    {
+      "children": [
+        6
+      ],
+      "name": "Area_Highlight_2"
+    },
+    {
+      "mesh": 0,
+      "name": "Object_6"
+    }
+  ],
+  "samplers": [
+    {
+      "magFilter": 9729,
+      "minFilter": 9987,
+      "wrapS": 10497,
+      "wrapT": 10497
+    }
+  ],
+  "scene": 0,
+  "scenes": [
+    {
+      "name": "Sketchfab_Scene",
+      "nodes": [
+        0
+      ]
+    }
+  ],
+  "textures": [
+    {
+      "sampler": 0,
+      "source": 0
+    },
+    {
+      "sampler": 0,
+      "source": 1
+    },
+    {
+      "sampler": 0,
+      "source": 2
+    },
+    {
+      "sampler": 0,
+      "source": 3
+    }
+  ]
+}

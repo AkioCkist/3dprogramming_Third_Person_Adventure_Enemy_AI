@@ -1,0 +1,11 @@
+Model Information:
+* title:	Area Highlight carate25
+* source:	https://sketchfab.com/3d-models/area-highlight-carate25-967928e18bcb4aecb304e5416a86c24d
+* author:	fwild (https://sketchfab.com/fwild)
+
+Model License:
+* license type:	CC-BY-4.0 (http://creativecommons.org/licenses/by/4.0/)
+* requirements:	Author must be credited. Commercial use is allowed.
+
+If you use this 3D model in your project be sure to copy paste this credit wherever you share it:
+This work is based on "Area Highlight carate25" (https://sketchfab.com/3d-models/area-highlight-carate25-967928e18bcb4aecb304e5416a86c24d) by fwild (https://sketchfab.com/fwild) licensed under CC-BY-4.0 (http://creativecommons.org/licenses/by/4.0/)
