@@ -8,6 +8,12 @@
 [ext_resource type="PackedScene" uid="uid://c8casqy4koxgd" path="res://Escape.tscn" id="6_7mycd"]
 [ext_resource type="Script" uid="uid://b3aaujdugwsg" path="res://EscapeArea.gd" id="7_5vw27"]
 [ext_resource type="PackedScene" path="res://GameOverUI.tscn" id="8_kek77"]
+[ext_resource type="PackedScene" uid="uid://djv4hmwfy7ggp" path="res://crystal.tscn" id="9_dg77c"]
+[ext_resource type="Script" uid="uid://bqqc6bo70xr3q" path="res://Crystal.gd" id="10_ycdy4"]
+[ext_resource type="Script" uid="uid://cxmko8j84jbih" path="res://GameManager.gd" id="11_w48qg"]
+[ext_resource type="Script" uid="uid://dwcudg0i45j64" path="res://CrystalHUD.gd" id="12_vivmo"]
+[ext_resource type="Script" uid="uid://67ohpd7pv3v6" path="res://HealthHUD.gd" id="13_ycdy4"]
+[ext_resource type="Script" uid="uid://cpnm83suxgl68" path="res://DamageOverlay.gd" id="14_w48qg"]
 
 [sub_resource type="PanoramaSkyMaterial" id="PanoramaSkyMaterial_w65u8"]
 panorama = ExtResource("4_5vw27")
@@ -42,6 +48,34 @@ size = Vector3(87.77, 80, 2)
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_4c57u"]
 size = Vector3(32, 80, 30)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_dg77c"]
+bg_color = Color(0.101960786, 0.12156863, 0.16862746, 1)
+corner_radius_top_left = 4
+corner_radius_top_right = 4
+corner_radius_bottom_right = 4
+corner_radius_bottom_left = 4
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ycdy4"]
+bg_color = Color(0.18039216, 0.9019608, 0.8392157, 1)
+corner_radius_top_left = 4
+corner_radius_top_right = 4
+corner_radius_bottom_right = 4
+corner_radius_bottom_left = 4
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_w48qg"]
+bg_color = Color(0.101960786, 0.12156863, 0.16862746, 1)
+corner_radius_top_left = 4
+corner_radius_top_right = 4
+corner_radius_bottom_right = 4
+corner_radius_bottom_left = 4
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_vivmo"]
+bg_color = Color(0.2, 0.85882354, 0.4509804, 1)
+corner_radius_top_left = 4
+corner_radius_top_right = 4
+corner_radius_bottom_right = 4
+corner_radius_bottom_left = 4
 
 [node name="Main" type="Node3D" unique_id=604717951]
 
@@ -80,7 +114,7 @@ navigation_mesh = SubResource("NavigationMesh_3vi7k")
 [node name="Node3D" parent="Map" unique_id=1086839066 instance=ExtResource("5_kek77")]
 transform = Transform3D(4.215, 0, 0, 0, 4.215, 0, 0, 0, 4.215, 7.70539, -26.555653, 0)
 
-[node name="Escape" parent="." unique_id=853179262 instance=ExtResource("6_7mycd")]
+[node name="Escape" parent="." unique_id=853179262 groups=["EscapeVisual"] instance=ExtResource("6_7mycd")]
 transform = Transform3D(176.74, 0, 0, 0, 214.93, 0, 0, 0, 162.44, 7.7381, 7.4895954, -119.36148)
 
 [node name="PlayerLimitMove" type="StaticBody3D" parent="." unique_id=900753628]
@@ -112,3 +146,102 @@ script = ExtResource("7_5vw27")
 shape = SubResource("BoxShape3D_4c57u")
 
 [node name="GameOverUI" parent="." unique_id=2014863775 instance=ExtResource("8_kek77")]
+
+[node name="Crystal" parent="." unique_id=1246825449 instance=ExtResource("9_dg77c")]
+transform = Transform3D(2.415, 0, 0, 0, 2.415, 0, 0, 0, 2.415, 5.77356, 0.8654189, 67.82395)
+script = ExtResource("10_ycdy4")
+
+[node name="Crystal2" parent="." unique_id=885866796 instance=ExtResource("9_dg77c")]
+transform = Transform3D(2.415, 0, 0, 0, 2.415, 0, 0, 0, 2.415, 16.113914, 0.76098084, 20.166143)
+script = ExtResource("10_ycdy4")
+
+[node name="Crystal3" parent="." unique_id=1119715278 instance=ExtResource("9_dg77c")]
+transform = Transform3D(2.415, 0, 0, 0, 2.415, 0, 0, 0, 2.415, 12.145507, 13.047349, -13.874639)
+script = ExtResource("10_ycdy4")
+
+[node name="Crystal4" parent="." unique_id=1028570737 instance=ExtResource("9_dg77c")]
+transform = Transform3D(2.415, 0, 0, 0, 2.415, 0, 0, 0, 2.415, -21.803602, -1.5839863, -38.17594)
+script = ExtResource("10_ycdy4")
+
+[node name="GameManager" type="Node" parent="." unique_id=820400565]
+script = ExtResource("11_w48qg")
+
+[node name="CrystalHUD" type="CanvasLayer" parent="." unique_id=1419167680]
+script = ExtResource("12_vivmo")
+
+[node name="Panel" type="PanelContainer" parent="CrystalHUD" unique_id=288205370]
+offset_left = 24.0
+offset_top = 24.0
+offset_right = 376.0
+offset_bottom = 115.0
+
+[node name="Margin" type="MarginContainer" parent="CrystalHUD/Panel" unique_id=119755811]
+layout_mode = 2
+theme_override_constants/margin_left = 16
+theme_override_constants/margin_top = 12
+theme_override_constants/margin_right = 16
+theme_override_constants/margin_bottom = 12
+
+[node name="Column" type="VBoxContainer" parent="CrystalHUD/Panel/Margin" unique_id=1596889580]
+layout_mode = 2
+theme_override_constants/separation = 10
+
+[node name="Label" type="Label" parent="CrystalHUD/Panel/Margin/Column" unique_id=1318085588]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.9098039, 0.95686275, 0.9490196, 1)
+theme_override_font_sizes/font_size = 22
+text = "CRYSTAL  0 / 4"
+
+[node name="Bar" type="ProgressBar" parent="CrystalHUD/Panel/Margin/Column" unique_id=1842432162]
+custom_minimum_size = Vector2(320, 26)
+layout_mode = 2
+theme_override_styles/background = SubResource("StyleBoxFlat_dg77c")
+theme_override_styles/fill = SubResource("StyleBoxFlat_ycdy4")
+max_value = 4.0
+show_percentage = false
+
+[node name="HealthHUD" type="CanvasLayer" parent="." unique_id=640850254]
+script = ExtResource("13_ycdy4")
+
+[node name="Panel" type="PanelContainer" parent="HealthHUD" unique_id=1139597704]
+offset_left = 24.0
+offset_top = 124.0
+offset_right = 376.0
+offset_bottom = 215.0
+
+[node name="Margin" type="MarginContainer" parent="HealthHUD/Panel" unique_id=758403744]
+layout_mode = 2
+theme_override_constants/margin_left = 16
+theme_override_constants/margin_top = 12
+theme_override_constants/margin_right = 16
+theme_override_constants/margin_bottom = 12
+
+[node name="Column" type="VBoxContainer" parent="HealthHUD/Panel/Margin" unique_id=1690826747]
+layout_mode = 2
+theme_override_constants/separation = 10
+
+[node name="Label" type="Label" parent="HealthHUD/Panel/Margin/Column" unique_id=1214454696]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.9098039, 0.95686275, 0.9490196, 1)
+theme_override_font_sizes/font_size = 22
+text = "HEALTH  3 / 3"
+
+[node name="Bar" type="ProgressBar" parent="HealthHUD/Panel/Margin/Column" unique_id=1339067217]
+custom_minimum_size = Vector2(320, 26)
+layout_mode = 2
+theme_override_styles/background = SubResource("StyleBoxFlat_w48qg")
+theme_override_styles/fill = SubResource("StyleBoxFlat_vivmo")
+max_value = 3.0
+value = 3.0
+show_percentage = false
+
+[node name="DamageOverlay" type="CanvasLayer" parent="." unique_id=1075572630]
+layer = 0
+script = ExtResource("14_w48qg")
+
+[node name="Rect" type="ColorRect" parent="DamageOverlay" unique_id=1805275155]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+mouse_filter = 2
+color = Color(0.75, 0, 0, 0)

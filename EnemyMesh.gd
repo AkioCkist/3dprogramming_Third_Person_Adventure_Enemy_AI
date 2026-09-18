@@ -9,19 +9,10 @@ func dead():
 func disable_collision():
 	get_parent().get_node("CollisionShape3D").disabled = true
 
-# ENEMY HITS THE PLAYER - PLAYER DEAD
+# ENEMY ATTACK LANDS ON THE PLAYER - DEAL ONE POINT OF DAMAGE.
+# The player owns the health pool and enforces the 2s invulnerability window,
+# so this and the body-contact tick can never double-hit on the same frame.
 func _on_attack_body_entered(body):
-	
-	if body.is_in_group("Player") and !body.dead:
-		body.dead = true
-		body.jumping = false
-		body.get_node("DeathTimer").start()
-		get_tree().get_root().set_disable_input(true)
-		
-		#RESETS ENEMY TO IDLE STATE
-		for i in get_tree().get_nodes_in_group("Enemy"):
-			if i.chasing == true:
-				i.patrolling = false
-				i.chasing = false
-				i.target = null
-				i.get_node("Timer").start()
+
+	if body.is_in_group("Player"):
+		body.take_damage(1)

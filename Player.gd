@@ -1,5 +1,13 @@
 extends CharacterBody3D
 
+# EMITTED WHENEVER HEALTH CHANGES SO HealthHUD CAN MIRROR IT
+signal health_changed(health, max_health)
+
+const MAX_HEALTH = 3
+# SECONDS OF INVULNERABILITY AFTER A HIT. WHILE AN ENEMY KEEPS TOUCHING THE
+# PLAYER, DAMAGE RE-TICKS ONCE THIS ELAPSES.
+const DAMAGE_INTERVAL = 2.0
+
 const JUMP_VELOCITY = 15
 const ANIM_IDLERUN = 0
 const ANIM_JUMP = 1
@@ -16,12 +24,14 @@ var jump_state = 0
 var moving = false
 var jumping = false
 var dead = false
+var max_health = MAX_HEALTH
+var health = MAX_HEALTH
+var damage_cooldown = 0.0
 var gravity = 30
 var lastPos = Vector3()
 var direction = Vector3()
 
 @onready var camera = get_tree().get_nodes_in_group("Camera")[0]
-@onready var spawn = get_tree().get_nodes_in_group("Spawn")[0]
 @onready var animation = $Boy/AnimationTree
 
 var state
@@ -31,13 +41,18 @@ enum {IDLERUN, JUMP, DEAD, ATTACK}
 func _ready():
 	# HANDLES MOUSE CURSOR TO BE HIDDEN
 	Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
+	# set_disable_input() lives on the root Viewport, which survives a scene
+	# reload - clear it here or the respawned player would be frozen.
+	get_tree().get_root().set_disable_input(false)
+	health = max_health
 	change_state(IDLERUN)
-	
+
 
 func _physics_process(delta):
 	animate()
 	knockback()
-	
+	damage_tick(delta)
+
 	# HANDLES GRAVITY & PREVENT CHARACTER FROM TILTING WHEN JUMPING
 	if not is_on_floor():
 		velocity.y -= gravity * delta
@@ -91,6 +106,65 @@ func _physics_process(delta):
 		moving = false
 
 	move_and_slide()
+	check_enemy_contact()
+
+
+# CONTACT DAMAGE - TICKS EVERY DAMAGE_INTERVAL FOR AS LONG AS AN ENEMY BODY
+# KEEPS TOUCHING US. move_and_slide() already resolved the overlaps, so the
+# slide collisions are the list of things we are currently pressed against.
+func check_enemy_contact():
+	if dead or damage_cooldown > 0.0:
+		return
+
+	for i in range(get_slide_collision_count()):
+		var collider = get_slide_collision(i).get_collider()
+		if collider and collider.is_in_group("Enemy") and not collider.dead:
+			take_damage(1)
+			return
+
+
+# SINGLE TUNING POINT FOR EVERY DAMAGE SOURCE (BODY CONTACT + ENEMY ATTACK AREA)
+func take_damage(amount):
+	if dead or damage_cooldown > 0.0:
+		return
+
+	health = max(health - amount, 0)
+	damage_cooldown = DAMAGE_INTERVAL
+	health_changed.emit(health, max_health)
+
+	if health <= 0:
+		die()
+
+
+func die():
+	dead = true
+	jumping = false
+	get_tree().get_root().set_disable_input(true)
+	$Boy.visible = true
+
+	# RESET EVERY ENEMY BACK TO IDLE
+	for i in get_tree().get_nodes_in_group("Enemy"):
+		if i.chasing == true or i.patrolling == true:
+			i.patrolling = false
+			i.chasing = false
+			i.target = null
+			i.get_node("Timer").start()
+
+	$DeathTimer.start()
+
+
+# BLINK WHILE INVULNERABLE SO THE PLAYER CAN SEE THE HIT LANDED
+func damage_tick(delta):
+	damage_cooldown = max(damage_cooldown - delta, 0.0)
+
+	if dead:
+		return
+
+	if damage_cooldown > 0.0:
+		$Boy.visible = fmod(damage_cooldown, 0.24) < 0.12
+	else:
+		$Boy.visible = true
+
 
 # KNOCKBACK WHEN CHARACTER JUMPS ON ENEMIES
 func knockback():
@@ -155,9 +229,8 @@ func animate():
 	if animation.get("parameters/state/current_index") != anim:
 		animation["parameters/state/transition_request"]= "state " + str(anim)
 
-# RESPAWN CHARACTER AFTER DEATH
+# DEATH TIMER RAN OUT - RESPAWN BY RESTARTING THE WHOLE RUN.
+# Reloading main.tscn resets health, crystals and enemy state together, which
+# is what "respawn but reset the game" means here.
 func _on_death_timer_timeout():
-	change_state(IDLERUN)
-	get_tree().get_root().set_disable_input(false)
-	dead = false
-	set_global_transform(spawn.get_global_transform()) 
+	get_tree().reload_current_scene()

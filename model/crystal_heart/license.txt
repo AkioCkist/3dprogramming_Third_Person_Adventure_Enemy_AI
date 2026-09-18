@@ -1,0 +1,11 @@
+Model Information:
+* title:	Crystal Heart
+* source:	https://sketchfab.com/3d-models/crystal-heart-8e8515a0834b4c1e9e477ce0f392a90c
+* author:	Talaei (https://sketchfab.com/habedi)
+
+Model License:
+* license type:	CC-BY-4.0 (http://creativecommons.org/licenses/by/4.0/)
+* requirements:	Author must be credited. Commercial use is allowed.
+
+If you use this 3D model in your project be sure to copy paste this credit wherever you share it:
+This work is based on "Crystal Heart" (https://sketchfab.com/3d-models/crystal-heart-8e8515a0834b4c1e9e477ce0f392a90c) by Talaei (https://sketchfab.com/habedi) licensed under CC-BY-4.0 (http://creativecommons.org/licenses/by/4.0/)

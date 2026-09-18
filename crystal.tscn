@@ -1,0 +1,16 @@
+[gd_scene format=3 uid="uid://djv4hmwfy7ggp"]
+
+[ext_resource type="PackedScene" uid="uid://dr7vck5l1yihw" path="res://model/crystal_heart/scene.gltf" id="1_200vn"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_suv4i"]
+
+[node name="Sketchfab_Scene" unique_id=1246825449 instance=ExtResource("1_200vn")]
+
+[node name="Area3D" type="Area3D" parent="." index="0" unique_id=1423141254]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Area3D" index="0" unique_id=1006789898]
+transform = Transform3D(1, 0, 0, 0, 1.54, 0, 0, 0, 1, 0, 0.7664693, 0)
+shape = SubResource("BoxShape3D_suv4i")
+
+[node name="AnimationPlayer" parent="." index="2" unique_id=788420157]
+autoplay = &"Take 001"
