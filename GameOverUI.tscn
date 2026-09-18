@@ -1,0 +1,51 @@
+[gd_scene load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://GameOverUI.gd" id="1_gameover"]
+
+[node name="GameOverUI" type="CanvasLayer"]
+process_mode = 3
+layer = 10
+script = ExtResource("1_gameover")
+
+[node name="Overlay" type="Control" parent="."]
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+
+[node name="Dim" type="ColorRect" parent="Overlay"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+color = Color(0, 0, 0, 0.72)
+
+[node name="Center" type="CenterContainer" parent="Overlay"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+
+[node name="Column" type="VBoxContainer" parent="Overlay/Center"]
+mouse_filter = 2
+theme_override_constants/separation = 24
+
+[node name="Title" type="Label" parent="Overlay/Center/Column"]
+text = "GAME OVER"
+horizontal_alignment = 1
+theme_override_font_sizes/font_size = 64
+
+[node name="Hint" type="Label" parent="Overlay/Center/Column"]
+text = "You reached the escape zone."
+horizontal_alignment = 1
+theme_override_font_sizes/font_size = 20
+
+[node name="PlayAgain" type="Button" parent="Overlay/Center/Column"]
+custom_minimum_size = Vector2(260, 60)
+text = "PLAY AGAIN"
+theme_override_font_sizes/font_size = 28
+
+[connection signal="pressed" from="Overlay/Center/Column/PlayAgain" to="." method="_on_play_again_pressed"]
