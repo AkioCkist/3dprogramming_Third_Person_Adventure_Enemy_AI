@@ -1,0 +1,11 @@
+Model Information:
+* title:	Granny bear trap
+* source:	https://sketchfab.com/3d-models/granny-bear-trap-75bfa95ae422400c9039ec06803b37dd
+* author:	Eri Game Dev (https://sketchfab.com/blerko0178)
+
+Model License:
+* license type:	CC-BY-4.0 (http://creativecommons.org/licenses/by/4.0/)
+* requirements:	Author must be credited. Commercial use is allowed.
+
+If you use this 3D model in your project be sure to copy paste this credit wherever you share it:
+This work is based on "Granny bear trap" (https://sketchfab.com/3d-models/granny-bear-trap-75bfa95ae422400c9039ec06803b37dd) by Eri Game Dev (https://sketchfab.com/blerko0178) licensed under CC-BY-4.0 (http://creativecommons.org/licenses/by/4.0/)

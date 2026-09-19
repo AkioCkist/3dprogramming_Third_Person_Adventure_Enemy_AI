@@ -16,6 +16,21 @@ var dead = false
 @onready var animation = $EnemyMesh/AnimationTree
 @onready var navigationagent = $NavigationAgent3D
 
+# VISION - ENEMY ONLY SPOTS THE PLAYER INSIDE THIS CONE AND WITH A CLEAR LINE OF SIGHT
+@export var vision_range = 25.0
+# FULL CONE ANGLE IN DEGREES (PLAYER MUST BE WITHIN HALF OF IT EITHER SIDE OF FORWARD)
+@export var vision_fov = 150.0
+@export var vision_collision_mask = 1
+@export var vision_requires_line_of_sight = true
+@export var eye_height = 1.6
+@export var vision_color_idle = Color(0.25, 1.0, 0.35, 0.18)
+@export var vision_color_chase = Color(1.0, 0.25, 0.2, 0.28)
+# VISION CONE MESH RAISED SLIGHTLY OFF THE GROUND SO IT READS AS A WEDGE
+@export var vision_cone_height = 1.0
+
+var vision_cone : MeshInstance3D
+var vision_material : StandardMaterial3D
+
 
 const ANIM_IDLE = 0
 const ANIM_PATROL = 1
@@ -37,12 +52,18 @@ func _ready():
 	
 	# RANDOMIZE PATROL POINTS
 	randomize()
-	
+
+	# BUILD THE VISION CONE VISUAL
+	build_vision_cone()
+
 func _physics_process(delta):
 	
 	# RUNS ENEMY ANIMATION
 	animate()
-	
+
+	# VISION BASED DETECTION - REPLACES THE OLD PROXIMITY AREA
+	update_vision()
+
 	# HANDLES CHASING
 	if target and not dead:
 		if chasing:
@@ -152,17 +173,115 @@ func _on_navigation_agent_3d_velocity_computed(safe_velocity):
 	velocity = safe_velocity
 	move_and_slide()
 
-# DETECTION AREA - PLAYER IS NEARBY
-func _on_player_detection_body_entered(body):
-	if body.is_in_group("Player"):
-		target = body
-		patrolling = false
-		chasing = true
-		$Timer.stop()
-# DETECTION AREA - PLAYER IS FAR (CHANGE TO IDLE THEN PATROLLING)
-func _on_player_detection_body_exited(body):
-	if body.is_in_group("Player"):
-		target = null
-		chasing = false
-		patrolling = false
-		$Timer.start()
+# VISION DETECTION - RUNS EVERY PHYSICS FRAME
+func update_vision():
+	if vision_cone:
+		vision_cone.visible = not dead
+
+	if dead:
+		return
+
+	if can_see_player():
+		if not chasing:
+			on_player_spotted()
+	else:
+		if chasing:
+			on_player_lost()
+
+	if vision_material:
+		vision_material.albedo_color = vision_color_chase if chasing else vision_color_idle
+
+
+# TRUE WHEN THE PLAYER IS INSIDE RANGE, INSIDE THE CONE AND NOT HIDDEN BY GEOMETRY
+func can_see_player() -> bool:
+	if player == null:
+		return false
+
+	var offset = player.global_position - global_position
+	offset.y = 0.0
+
+	var distance = offset.length()
+	if distance > vision_range:
+		return false
+
+	if distance > 0.001:
+		# THE ENEMY MODEL FACES +Z, AND rotation.y IS SET FROM atan2(x, z) TO MATCH
+		var forward = global_transform.basis.z
+		forward.y = 0.0
+		var angle = rad_to_deg(forward.normalized().angle_to(offset.normalized()))
+		if angle > vision_fov * 0.5:
+			return false
+
+	return has_line_of_sight()
+
+
+# RAY FROM THE ENEMY EYES TO THE PLAYER CHEST - ANYTHING ELSE BLOCKS THE VIEW
+func has_line_of_sight() -> bool:
+	if not vision_requires_line_of_sight:
+		return true
+
+	var space_state = get_world_3d().direct_space_state
+	var from = global_position + Vector3.UP * eye_height
+	var to = player.global_position + Vector3.UP * 1.0
+
+	var query = PhysicsRayQueryParameters3D.create(from, to)
+	query.exclude = [get_rid()]
+	query.collision_mask = vision_collision_mask
+
+	var hit = space_state.intersect_ray(query)
+
+	# EMPTY MEANS NOTHING IN THE WAY
+	if hit.is_empty():
+		return true
+
+	return hit.collider == player or (hit.collider and hit.collider.is_in_group("Player"))
+
+
+# BUILT IN CODE SO EVERY ENEMY INSTANCE GETS IT WITHOUT SCENE WIRING
+func build_vision_cone():
+	vision_material = StandardMaterial3D.new()
+	vision_material.transparency = BaseMaterial3D.TRANSPARENCY_ALPHA
+	vision_material.shading_mode = BaseMaterial3D.SHADING_MODE_UNSHADED
+	vision_material.cull_mode = BaseMaterial3D.CULL_DISABLED
+	vision_material.albedo_color = vision_color_idle
+
+	vision_cone = MeshInstance3D.new()
+	vision_cone.name = "VisionCone"
+	vision_cone.material_override = vision_material
+	add_child(vision_cone)
+
+	update_vision_cone_mesh()
+
+
+# UNIT CONE: APEX AT THE ENEMY, BASE AT vision_range FORWARD ALONG +Z
+func update_vision_cone_mesh():
+	if vision_cone == null:
+		return
+
+	var cone = CylinderMesh.new()
+	cone.height = vision_range
+	cone.top_radius = 0.0
+	cone.bottom_radius = tan(deg_to_rad(vision_fov * 0.5)) * vision_range
+	cone.radial_segments = 24
+	cone.rings = 1
+	cone.cap_top = false
+	cone.cap_bottom = true
+	vision_cone.mesh = cone
+
+	# CYLINDER RUNS ALONG Y - LAY IT DOWN SO THE TIP SITS ON THE ENEMY
+	vision_cone.rotation = Vector3(deg_to_rad(-90), 0, 0)
+	vision_cone.position = Vector3(0, vision_cone_height, vision_range * 0.5)
+
+
+func on_player_spotted():
+	target = player
+	patrolling = false
+	chasing = true
+	$Timer.stop()
+
+
+func on_player_lost():
+	target = null
+	chasing = false
+	patrolling = false
+	$Timer.start()

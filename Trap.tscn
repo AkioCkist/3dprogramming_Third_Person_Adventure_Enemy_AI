@@ -1,0 +1,13 @@
+[gd_scene format=3 uid="uid://733okh6earv7"]
+
+[ext_resource type="PackedScene" uid="uid://c6t6g1krkbnub" path="res://model/granny_bear_trap/scene.gltf" id="1_r7j2q"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_suv4i"]
+
+[node name="Trap" type="Node3D" unique_id=883482367]
+
+[node name="Sketchfab_Scene" parent="." unique_id=85234925 instance=ExtResource("1_r7j2q")]
+transform = Transform3D(61.105, 0, 0, 0, 61.105, 0, 0, 0, 61.105, 5.498, -8.675, -1.899)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=2091701703]
+shape = SubResource("BoxShape3D_suv4i")

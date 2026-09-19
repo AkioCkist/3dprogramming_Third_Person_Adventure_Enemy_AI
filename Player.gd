@@ -2,6 +2,8 @@ extends CharacterBody3D
 
 # EMITTED WHENEVER HEALTH CHANGES SO HealthHUD CAN MIRROR IT
 signal health_changed(health, max_health)
+# EMITTED ONCE THE DEATH ANIMATION IS DONE - GameOverUI SHOWS THE SCREEN
+signal died()
 
 const MAX_HEALTH = 3
 # SECONDS OF INVULNERABILITY AFTER A HIT. WHILE AN ENEMY KEEPS TOUCHING THE
@@ -229,8 +231,8 @@ func animate():
 	if animation.get("parameters/state/current_index") != anim:
 		animation["parameters/state/transition_request"]= "state " + str(anim)
 
-# DEATH TIMER RAN OUT - RESPAWN BY RESTARTING THE WHOLE RUN.
-# Reloading main.tscn resets health, crystals and enemy state together, which
-# is what "respawn but reset the game" means here.
+# DEATH ANIMATION RAN OUT - HAND OFF TO GameOverUI, WHICH PUTS UP THE GAME OVER
+# SCREEN AND PAUSES. Playing again reloads main.tscn, which resets health,
+# crystals and enemies together.
 func _on_death_timer_timeout():
-	get_tree().reload_current_scene()
+	died.emit()
