@@ -30,6 +30,11 @@ func _on_health_changed(_health, _max_health):
 	rect.color.a = PEAK_ALPHA
 
 
+# TRAPS AND OTHER NON-DAMAGE HITS FLASH THE SCREEN THE SAME WAY
+func flash():
+	rect.color.a = PEAK_ALPHA
+
+
 func _process(delta):
 	if rect.color.a <= 0.0:
 		return

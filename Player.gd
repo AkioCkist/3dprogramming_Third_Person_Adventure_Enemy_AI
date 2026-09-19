@@ -20,7 +20,11 @@ const IDLE_BLEND_AMOUNT = 0.08
 const JUMP_BLEND_AMOUNT = 0.15
 
 var anim = ANIM_IDLERUN
-var speed = 12.0
+# TRAPS SCALE THIS DOWN THROUGH apply_slow()
+const BASE_SPEED = 12.0
+var speed = BASE_SPEED
+var slow_factor = 1.0
+var slow_time_left = 0.0
 var move_state = 0
 var jump_state = 0
 var moving = false
@@ -54,6 +58,7 @@ func _physics_process(delta):
 	animate()
 	knockback()
 	damage_tick(delta)
+	update_slow(delta)
 
 	# HANDLES GRAVITY & PREVENT CHARACTER FROM TILTING WHEN JUMPING
 	if not is_on_floor():
@@ -119,10 +124,38 @@ func check_enemy_contact():
 		return
 
 	for i in range(get_slide_collision_count()):
-		var collider = get_slide_collision(i).get_collider()
-		if collider and collider.is_in_group("Enemy") and not collider.dead:
-			take_damage(1)
-			return
+		var collision = get_slide_collision(i)
+		var collider = collision.get_collider()
+
+		if collider == null or not collider.is_in_group("Enemy") or collider.dead:
+			continue
+
+		# THE STOMP RAY CAN LAND A FRAME LATE, SO ALSO IGNORE ANY CONTACT FROM
+		# ABOVE: A NORMAL POINTING UP MEANS WE LANDED ON ITS HEAD, NOT ITS BODY.
+		if collision.get_normal().y > 0.5:
+			continue
+
+		take_damage(1)
+		return
+
+
+# TRAP / DEBUFF ENTRY POINT. THE STRONGEST SLOW WINS AND THE TIMER REFRESHES,
+# SO TRIPPING A SECOND TRAP WHILE SLOWED NEVER STACKS INTO A CRAWL.
+func apply_slow(factor, duration):
+	slow_factor = min(slow_factor, factor)
+	slow_time_left = max(slow_time_left, duration)
+	speed = BASE_SPEED * slow_factor
+
+
+func update_slow(delta):
+	if slow_time_left <= 0.0:
+		return
+
+	slow_time_left = max(slow_time_left - delta, 0.0)
+
+	if slow_time_left <= 0.0:
+		slow_factor = 1.0
+		speed = BASE_SPEED
 
 
 # SINGLE TUNING POINT FOR EVERY DAMAGE SOURCE (BODY CONTACT + ENEMY ATTACK AREA)
@@ -170,16 +203,31 @@ func damage_tick(delta):
 
 # KNOCKBACK WHEN CHARACTER JUMPS ON ENEMIES
 func knockback():
-	if ($KnockBack.is_colliding() and $KnockBack.get_collider().is_in_group("Enemy")):
-		velocity.y = KNOCKBACKJUMP
-		var knockback = $KnockBack.get_collider()
-		knockback.dead = true
-		knockback.chase_speed = 0
-		knockback.patrol_speed = 0
-		knockback.get_node("Timer").stop()
-		knockback.patrolling = false
-		knockback.chasing = false
-		knockback.target = null
+	# FRESH CAST. THE PHYSICS STEP HAS NOT RUN YET THIS FRAME, SO WAITING FOR
+	# THE CACHED RESULT MEANS THE ENEMY IS STILL ALIVE WHEN THE CONTACT TICK
+	# RUNS LATER IN THE SAME FRAME - WHICH COSTS THE PLAYER A HEART.
+	$KnockBack.force_raycast_update()
+
+	if not $KnockBack.is_colliding():
+		return
+
+	var hit = $KnockBack.get_collider()
+	if hit == null or not hit.is_in_group("Enemy"):
+		return
+
+	# STILL BOUNCE OFF A CORPSE, BUT DO NOT RE-RUN THE DEATH SETUP ON IT
+	velocity.y = KNOCKBACKJUMP
+
+	if hit.dead:
+		return
+
+	hit.dead = true
+	hit.chase_speed = 0
+	hit.patrol_speed = 0
+	hit.get_node("Timer").stop()
+	hit.patrolling = false
+	hit.chasing = false
+	hit.target = null
 
 
 # HANDLES THE STATE CHANGE

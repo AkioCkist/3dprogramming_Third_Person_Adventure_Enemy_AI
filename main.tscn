@@ -14,6 +14,7 @@
 [ext_resource type="Script" uid="uid://dwcudg0i45j64" path="res://CrystalHUD.gd" id="12_vivmo"]
 [ext_resource type="Script" uid="uid://67ohpd7pv3v6" path="res://HealthHUD.gd" id="13_ycdy4"]
 [ext_resource type="Script" uid="uid://cpnm83suxgl68" path="res://DamageOverlay.gd" id="14_w48qg"]
+[ext_resource type="PackedScene" uid="uid://733okh6earv7" path="res://Trap.tscn" id="15_vivmo"]
 
 [sub_resource type="PanoramaSkyMaterial" id="PanoramaSkyMaterial_w65u8"]
 panorama = ExtResource("4_5vw27")
@@ -235,7 +236,7 @@ max_value = 3.0
 value = 3.0
 show_percentage = false
 
-[node name="DamageOverlay" type="CanvasLayer" parent="." unique_id=1075572630]
+[node name="DamageOverlay" type="CanvasLayer" parent="." unique_id=1075572630 groups=["DamageOverlay"]]
 layer = 0
 script = ExtResource("14_w48qg")
 
@@ -245,3 +246,36 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 mouse_filter = 2
 color = Color(0.75, 0, 0, 0)
+
+[node name="Trap" parent="." unique_id=883482367 instance=ExtResource("15_vivmo")]
+transform = Transform3D(2.295, 0, 0, 0, 2.286267, 0.20002243, 0, -0.20002243, 2.286267, -5.6958504, 1.9396591, 57.935383)
+
+[node name="Trap2" parent="." unique_id=629211451 instance=ExtResource("15_vivmo")]
+transform = Transform3D(2.295, 0, 0, 0, 2.295, 0, 0, 0, 2.295, -19.02771, 4.891405, 15.939053)
+
+[node name="Trap3" parent="." unique_id=572071309 instance=ExtResource("15_vivmo")]
+transform = Transform3D(2.295, 0, 0, 0, 1.8448515, 1.3651184, 0, -1.3651184, 1.8448515, -17.296253, 2.2147017, -25.12077)
+
+[node name="Trap4" parent="." unique_id=1782610737 instance=ExtResource("15_vivmo")]
+transform = Transform3D(3.7240646, 2.2525303, 1.1629608, -1.5542029, 3.6614728, -2.1149695, -2.0027041, 1.3471267, 3.8038733, 18.044283, 6.46333, -90.85012)
+
+[node name="Trap10" parent="." unique_id=619958050 instance=ExtResource("15_vivmo")]
+transform = Transform3D(3.7240646, 2.2525303, 1.1629608, -1.5542029, 3.6614728, -2.1149695, -2.0027041, 1.3471267, 3.8038733, 22.537754, 4.85524, -93.511635)
+
+[node name="Trap7" parent="." unique_id=81503651 instance=ExtResource("15_vivmo")]
+transform = Transform3D(3.6593232, 0.641286, -2.5481634, -0.9353587, 4.400516, -0.2357735, 2.455502, 0.72058105, 3.7076004, 1.7234688, 8.523302, -87.18197)
+
+[node name="Trap9" parent="." unique_id=517572872 instance=ExtResource("15_vivmo")]
+transform = Transform3D(3.6593232, 0.641286, -2.5481634, -0.9353587, 4.400516, -0.2357735, 2.455502, 0.72058105, 3.7076004, 7.9113626, 8.523302, -87.18197)
+
+[node name="Trap8" parent="." unique_id=926434334 instance=ExtResource("15_vivmo")]
+transform = Transform3D(3.7083962, 0.22291663, -2.5481634, -0.43119347, 4.4781146, -0.2357735, 2.5212898, 0.43797836, 3.7076004, -4.68357, 8.438958, -87.35875)
+
+[node name="Trap5" parent="." unique_id=1023077125 instance=ExtResource("15_vivmo")]
+transform = Transform3D(4.0255814, 1.2597141, 1.5820372, -0.9930602, 4.301416, -0.89815253, -1.7616906, 0.45383528, 4.1213474, 27.722523, 4.2358694, -97.92269)
+
+[node name="Trap6" parent="." unique_id=1603441382 instance=ExtResource("15_vivmo")]
+transform = Transform3D(4.3217854, 0.82045925, 0.9716177, -0.39891744, 4.1429157, -1.723989, -1.2075013, 1.5678393, 4.0470786, 34.777744, 7.4652386, -107.53635)
+
+[node name="Trap11" parent="." unique_id=361915317 instance=ExtResource("15_vivmo")]
+transform = Transform3D(4.3217854, 0.82045925, 0.9716177, -0.39891744, 4.1429157, -1.723989, -1.2075013, 1.5678393, 4.0470786, 31.929104, 4.445533, -101.23835)

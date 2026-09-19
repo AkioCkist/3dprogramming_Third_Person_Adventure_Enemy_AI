@@ -1,8 +1,13 @@
 extends CharacterBody3D
 
 var target
-var chase_speed = 10.0
-var patrol_speed = 1.0
+# TRAPS SCALE THESE DOWN THROUGH apply_slow()
+const BASE_CHASE_SPEED = 10.0
+const BASE_PATROL_SPEED = 1.0
+var chase_speed = BASE_CHASE_SPEED
+var patrol_speed = BASE_PATROL_SPEED
+var slow_factor = 1.0
+var slow_time_left = 0.0
 var move_state = 0
 var patrol_range = 20
 var direction = Vector3()
@@ -63,6 +68,9 @@ func _physics_process(delta):
 
 	# VISION BASED DETECTION - REPLACES THE OLD PROXIMITY AREA
 	update_vision()
+
+	# TRAP SLOW TIMER
+	update_slow(delta)
 
 	# HANDLES CHASING
 	if target and not dead:
@@ -271,6 +279,32 @@ func update_vision_cone_mesh():
 	# CYLINDER RUNS ALONG Y - LAY IT DOWN SO THE TIP SITS ON THE ENEMY
 	vision_cone.rotation = Vector3(deg_to_rad(-90), 0, 0)
 	vision_cone.position = Vector3(0, vision_cone_height, vision_range * 0.5)
+
+
+# TRAP / DEBUFF ENTRY POINT - SAME RULES AS THE PLAYER
+func apply_slow(factor, duration):
+	if dead:
+		return
+
+	slow_factor = min(slow_factor, factor)
+	slow_time_left = max(slow_time_left, duration)
+	chase_speed = BASE_CHASE_SPEED * slow_factor
+	patrol_speed = BASE_PATROL_SPEED * slow_factor
+
+
+func update_slow(delta):
+	if slow_time_left <= 0.0:
+		return
+
+	slow_time_left = max(slow_time_left - delta, 0.0)
+
+	if slow_time_left <= 0.0:
+		# A STOMPED ENEMY STAYS FROZEN - knockback() ZEROED ITS SPEEDS
+		if dead:
+			return
+		slow_factor = 1.0
+		chase_speed = BASE_CHASE_SPEED
+		patrol_speed = BASE_PATROL_SPEED
 
 
 func on_player_spotted():

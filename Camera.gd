@@ -26,6 +26,10 @@ func _process(delta):
 func _on_player_health_changed(_health, _max_health):
 	shake_amount = SHAKE_STRENGTH
 
+# TRAPS ASK FOR THE SAME SHAKE WITHOUT DEALING DAMAGE
+func shake(strength = SHAKE_STRENGTH):
+	shake_amount = max(shake_amount, strength)
+
 func apply_shake(delta):
 	if shake_amount <= 0.0:
 		return
