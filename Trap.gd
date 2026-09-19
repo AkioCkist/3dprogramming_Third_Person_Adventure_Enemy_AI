@@ -45,6 +45,9 @@ func _on_body_entered(body):
 	if is_player or feedback_on_enemy:
 		hit_feedback()
 
+	if is_player:
+		Sound.play("trap")
+
 
 func play_snap():
 	if animation == null:

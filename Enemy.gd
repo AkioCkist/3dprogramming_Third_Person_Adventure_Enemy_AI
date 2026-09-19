@@ -312,6 +312,7 @@ func on_player_spotted():
 	patrolling = false
 	chasing = true
 	$Timer.stop()
+	Sound.play("enemy_spotted")
 
 
 func on_player_lost():

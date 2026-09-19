@@ -33,15 +33,15 @@ func _connect_player():
 
 # PLAYER RAN OUT OF HEALTH
 func _on_player_died():
-	show_game_over("GAME OVER", "You died.")
+	show_game_over("GAME OVER", "You died.", "lose")
 
 
 # PLAYER TOUCHED THE ESCAPE ZONE WITH EVERY CRYSTAL COLLECTED
 func _on_escaped(_body):
-	show_game_over("YOU ESCAPED", "All 4 crystals collected.")
+	show_game_over("YOU ESCAPED", "All 4 crystals collected.", "win")
 
 
-func show_game_over(title_text, hint_text):
+func show_game_over(title_text, hint_text, sound_name = ""):
 	title.text = title_text
 	hint.text = hint_text
 	overlay.show()
@@ -49,6 +49,14 @@ func show_game_over(title_text, hint_text):
 	# The Player disables viewport input while dying - clear it here or the
 	# Play Again button would never receive the click.
 	get_tree().get_root().set_disable_input(false)
+
+	# Music out of the way so the stinger is heard. Sound keeps processing while
+	# the tree is paused, so the sting still plays after this line.
+	Sound.stop_loops()
+	Sound.stop_music()
+	if sound_name != "":
+		Sound.play(sound_name)
+
 	get_tree().paused = true
 
 
@@ -56,4 +64,6 @@ func show_game_over(title_text, hint_text):
 func _on_play_again_pressed():
 	get_tree().paused = false
 	Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
+	# The autoload survived the pause, so the background loop needs a restart.
+	Sound.play_music("bg")
 	get_tree().reload_current_scene()

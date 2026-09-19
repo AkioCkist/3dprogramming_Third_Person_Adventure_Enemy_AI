@@ -36,6 +36,8 @@ var damage_cooldown = 0.0
 var gravity = 30
 var lastPos = Vector3()
 var direction = Vector3()
+# Tracks the run loop so it is only started/stopped when the state flips.
+var _run_sound = false
 
 @onready var camera = get_tree().get_nodes_in_group("Camera")[0]
 @onready var animation = $Boy/AnimationTree
@@ -114,6 +116,7 @@ func _physics_process(delta):
 
 	move_and_slide()
 	check_enemy_contact()
+	update_run_sound()
 
 
 # CONTACT DAMAGE - TICKS EVERY DAMAGE_INTERVAL FOR AS LONG AS AN ENEMY BODY
@@ -137,6 +140,18 @@ func check_enemy_contact():
 
 		take_damage(1)
 		return
+
+
+# RUN LOOP - SILENT WHENEVER THE PLAYER IS NOT ACTUALLY MOVING ON THE GROUND
+# (OR IS DEAD). `jumping` is already true for every airborne frame.
+func update_run_sound():
+	var should_play = moving and not dead and not jumping
+
+	if should_play == _run_sound:
+		return
+
+	_run_sound = should_play
+	Sound.set_looping("run", should_play)
 
 
 # TRAP / DEBUFF ENTRY POINT. THE STRONGEST SLOW WINS AND THE TIMER REFRESHES,
@@ -166,6 +181,7 @@ func take_damage(amount):
 	health = max(health - amount, 0)
 	damage_cooldown = DAMAGE_INTERVAL
 	health_changed.emit(health, max_health)
+	Sound.play("hit")
 
 	if health <= 0:
 		die()
@@ -228,6 +244,7 @@ func knockback():
 	hit.patrolling = false
 	hit.chasing = false
 	hit.target = null
+	Sound.play("kill")
 
 
 # HANDLES THE STATE CHANGE
