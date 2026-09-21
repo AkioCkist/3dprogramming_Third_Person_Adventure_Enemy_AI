@@ -15,6 +15,7 @@
 [ext_resource type="Script" uid="uid://67ohpd7pv3v6" path="res://HealthHUD.gd" id="13_ycdy4"]
 [ext_resource type="Script" uid="uid://cpnm83suxgl68" path="res://DamageOverlay.gd" id="14_w48qg"]
 [ext_resource type="PackedScene" uid="uid://733okh6earv7" path="res://Trap.tscn" id="15_vivmo"]
+[ext_resource type="PackedScene" path="res://MissionNote.tscn" id="16_2cqfq"]
 
 [sub_resource type="PanoramaSkyMaterial" id="PanoramaSkyMaterial_w65u8"]
 panorama = ExtResource("4_5vw27")
@@ -279,3 +280,5 @@ transform = Transform3D(4.3217854, 0.82045925, 0.9716177, -0.39891744, 4.1429157
 
 [node name="Trap11" parent="." unique_id=361915317 instance=ExtResource("15_vivmo")]
 transform = Transform3D(4.3217854, 0.82045925, 0.9716177, -0.39891744, 4.1429157, -1.723989, -1.2075013, 1.5678393, 4.0470786, 31.929104, 4.445533, -101.23835)
+
+[node name="MissionNote" parent="." unique_id=1748180267 instance=ExtResource("16_2cqfq")]

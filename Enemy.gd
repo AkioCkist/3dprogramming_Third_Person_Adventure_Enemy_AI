@@ -25,6 +25,8 @@ const ALERT_FORGET_DURATION = 5.0  # Seconds to forget after losing sight
 @onready var camera = get_tree().get_nodes_in_group("Camera")[0]
 @onready var animation = $EnemyMesh/AnimationTree
 @onready var navigationagent = $NavigationAgent3D
+@onready var game_mode_manager = get_node("/root/GameModeManager")
+@onready var game_manager = get_tree().get_first_node_in_group("CrystalManager")
 
 # VISION - ENEMY ONLY SPOTS THE PLAYER INSIDE THIS CONE AND WITH A CLEAR LINE OF SIGHT
 @export var vision_range = 25.0
@@ -337,6 +339,18 @@ func on_player_spotted():
 	chasing = true
 	$Timer.stop()
 	Sound.play("enemy_spotted")
+	
+	# Register alert in GameModeManager for Hardcore Mode
+	if game_mode_manager:
+		game_mode_manager.register_enemy_alert()
+		
+	# Re-fetch game_manager because it might not have been ready when this enemy spawned
+	if not game_manager:
+		game_manager = get_tree().get_first_node_in_group("CrystalManager")
+		
+	# Fail game if Hardcore Mode
+	if game_manager and game_mode_manager and game_mode_manager.is_hardcore():
+		game_manager._fail_game("Enemy Spotted!", "In Hardcore Mode, you cannot be spotted by enemies. The game is over.")
 
 
 func on_player_lost():

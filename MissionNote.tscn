@@ -1,0 +1,52 @@
+[gd_scene load_steps=2 format=3 uid="uid://missionnote_scene"]
+
+[ext_resource type="Script" path="res://MissionNote.gd" id="1_mission"]
+
+[node name="MissionNote" type="CanvasLayer"]
+layer = 5
+script = ExtResource("1_mission")
+
+[node name="Panel" type="PanelContainer" parent="."]
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -320.0
+offset_top = 20.0
+offset_right = -20.0
+offset_bottom = 120.0
+grow_horizontal = 0
+
+[node name="MarginContainer" type="MarginContainer" parent="Panel"]
+layout_mode = 2
+theme_override_constants/margin_left = 15
+theme_override_constants/margin_top = 10
+theme_override_constants/margin_right = 15
+theme_override_constants/margin_bottom = 10
+
+[node name="VBox" type="VBoxContainer" parent="Panel/MarginContainer"]
+layout_mode = 2
+theme_override_constants/separation = 8
+
+[node name="Header" type="HBoxContainer" parent="Panel/MarginContainer/VBox"]
+layout_mode = 2
+
+[node name="IconPlaceholder" type="TextureRect" parent="Panel/MarginContainer/VBox/Header"]
+custom_minimum_size = Vector2(24, 24)
+layout_mode = 2
+stretch_mode = 4
+
+[node name="Title" type="Label" parent="Panel/MarginContainer/VBox/Header"]
+layout_mode = 2
+text = "MISSION"
+theme_override_font_sizes/font_size = 18
+
+[node name="Objective" type="Label" parent="Panel/MarginContainer/VBox"]
+layout_mode = 2
+text = "Collect 5 Heart Crystals and reach the Escape Area."
+autowrap_mode = 3
+theme_override_font_sizes/font_size = 14
+
+[node name="ModeLabel" type="Label" parent="Panel/MarginContainer/VBox"]
+layout_mode = 2
+text = "Mode: Baby"
+theme_override_font_sizes/font_size = 12

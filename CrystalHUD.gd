@@ -2,8 +2,7 @@ extends CanvasLayer
 
 # PERSISTENT CRYSTAL PROGRESS READOUT.
 #
-# Mirrors GameManager's progress_changed into the bar + label. Node paths match
-# the CrystalHUD node built inside main.tscn.
+# Mirrors GameManager's progress_changed into the bar + label with placeholder icon.
 
 @onready var bar: ProgressBar = $Panel/Margin/Column/Bar
 @onready var label: Label = $Panel/Margin/Column/Label
@@ -26,4 +25,4 @@ func _connect_manager():
 func _on_progress_changed(collected: int, total: int):
 	bar.max_value = max(total, 1)
 	bar.value = collected
-	label.text = "CRYSTAL  %d / %d" % [collected, total]
+	label.text = "%d / %d" % [collected, total]

@@ -8,6 +8,8 @@ extends CanvasLayer
 # Shared by both endings: the Player emits `died` when health reaches zero, and
 # the Escape trigger lives in main.tscn and announces itself via the
 # "EscapeArea" group.
+#
+# Supports different messages based on game mode (Baby vs Hardcore).
 
 @onready var overlay = $Overlay
 @onready var title: Label = $Overlay/Center/Column/Title
@@ -15,6 +17,7 @@ extends CanvasLayer
 
 
 func _ready():
+	add_to_group("GameOverUI")
 	overlay.hide()
 
 	var area = get_tree().get_first_node_in_group("EscapeArea")
@@ -33,12 +36,20 @@ func _connect_player():
 
 # PLAYER RAN OUT OF HEALTH
 func _on_player_died():
-	show_game_over("GAME OVER", "You died.", "lose")
+	if GameModeManager.is_hardcore():
+		show_game_over("GAME OVER", "You died. In Hardcore Mode, you cannot be detected OR lose all health!", "lose")
+	else:
+		show_game_over("GAME OVER", "You ran out of health. Try again!", "lose")
 
 
 # PLAYER TOUCHED THE ESCAPE ZONE WITH EVERY CRYSTAL COLLECTED
 func _on_escaped(_body):
-	show_game_over("YOU ESCAPED", "All 4 crystals collected.", "win")
+	show_game_over("YOU ESCAPED!", GameModeManager.get_win_description(), "win")
+
+
+# HARDCORE MODE FAILURE - ENEMY ALERTED
+func show_game_over_failure(title_text: String, hint_text: String):
+	show_game_over(title_text, hint_text, "lose")
 
 
 func show_game_over(title_text, hint_text, sound_name = ""):
@@ -66,4 +77,8 @@ func _on_play_again_pressed():
 	Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
 	# The autoload survived the pause, so the background loop needs a restart.
 	Sound.play_music("bg")
+	
+	# Reset the game mode manager
+	GameModeManager.reset()
+	
 	get_tree().reload_current_scene()

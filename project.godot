@@ -15,7 +15,7 @@ compatibility/default_parent_skeleton_in_mesh_instance_3d=true
 [application]
 
 config/name="Godot 4 Basic Character Controller and Enemy Ai"
-run/main_scene="res://Main.tscn"
+run/main_scene="res://MainMenu.tscn"
 config/features=PackedStringArray("4.7", "Forward Plus")
 config/icon="res://icon.svg"
 
@@ -23,6 +23,7 @@ config/icon="res://icon.svg"
 
 _mcp_game_helper="*res://addons/godot_ai/runtime/game_helper.gd"
 Sound="*res://Sound.gd"
+GameModeManager="*res://GameModeManager.gd"
 
 [display]
 

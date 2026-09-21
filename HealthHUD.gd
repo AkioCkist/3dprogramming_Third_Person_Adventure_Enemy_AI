@@ -2,8 +2,7 @@ extends CanvasLayer
 
 # PLAYER HEALTH BAR.
 #
-# Mirrors the Player's health_changed signal. Node paths match the HealthHUD
-# node built inside main.tscn.
+# Mirrors the Player's health_changed signal. Shows hearts with placeholder icons.
 
 const HEALTH_LOW = Color(0.9, 0.25, 0.25)
 const HEALTH_HIGH = Color(0.2, 0.86, 0.45)
@@ -31,7 +30,7 @@ func _connect_player():
 func _on_health_changed(health: int, max_health: int):
 	bar.max_value = max(max_health, 1)
 	bar.value = health
-	label.text = "HEALTH  %d / %d" % [health, max_health]
+	label.text = "%d / %d" % [health, max_health]
 
 	# Fade the fill from green to red as health drops.
 	if bar.has_theme_stylebox_override("fill"):

@@ -1,0 +1,133 @@
+[gd_scene load_steps=3 format=3 uid="uid://mainmenu_scene"]
+
+[ext_resource type="Script" path="res://MainMenu.gd" id="1_menu"]
+[ext_resource type="Texture2D" uid="uid://ctg7mdq2obhbl" path="res://sky/skybox-day.png" id="2_bg"]
+
+[node name="MainMenu" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_menu")
+
+[node name="Background" type="TextureRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("2_bg")
+expand_mode = 1
+stretch_mode = 6
+
+[node name="DimOverlay" type="ColorRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 0.6)
+
+[node name="VBoxContainer" type="VBoxContainer" parent="."]
+layout_mode = 1
+anchors_preset = 14
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_top = -200.0
+offset_bottom = 200.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/separation = 40
+
+[node name="Title" type="Label" parent="VBoxContainer"]
+layout_mode = 2
+text = "CRYSTAL ESCAPE"
+horizontal_alignment = 1
+theme_override_font_sizes/font_size = 72
+
+[node name="Subtitle" type="Label" parent="VBoxContainer"]
+layout_mode = 2
+text = "Select Game Mode"
+horizontal_alignment = 1
+theme_override_font_sizes/font_size = 24
+
+[node name="ModesContainer" type="HBoxContainer" parent="VBoxContainer"]
+layout_mode = 2
+alignment = 1
+theme_override_constants/separation = 60
+
+[node name="BabyMode" type="VBoxContainer" parent="VBoxContainer/ModesContainer"]
+layout_mode = 2
+theme_override_constants/separation = 20
+
+[node name="BabyIcon" type="TextureRect" parent="VBoxContainer/ModesContainer/BabyMode"]
+custom_minimum_size = Vector2(120, 120)
+layout_mode = 2
+size_flags_horizontal = 4
+stretch_mode = 4
+
+[node name="BabyTitle" type="Label" parent="VBoxContainer/ModesContainer/BabyMode"]
+layout_mode = 2
+text = "BABY MODE"
+horizontal_alignment = 1
+theme_override_font_sizes/font_size = 28
+
+[node name="BabyDesc" type="Label" parent="VBoxContainer/ModesContainer/BabyMode"]
+custom_minimum_size = Vector2(250, 0)
+layout_mode = 2
+text = "Collect 5 Heart Crystals
+and reach the Escape Area
+without losing all health."
+autowrap_mode = 3
+horizontal_alignment = 1
+theme_override_font_sizes/font_size = 16
+
+[node name="BabyButton" type="Button" parent="VBoxContainer/ModesContainer/BabyMode"]
+layout_mode = 2
+size_flags_horizontal = 4
+text = "PLAY"
+
+[node name="HardcoreMode" type="VBoxContainer" parent="VBoxContainer/ModesContainer"]
+layout_mode = 2
+theme_override_constants/separation = 20
+
+[node name="HardcoreIcon" type="TextureRect" parent="VBoxContainer/ModesContainer/HardcoreMode"]
+custom_minimum_size = Vector2(120, 120)
+layout_mode = 2
+size_flags_horizontal = 4
+stretch_mode = 4
+
+[node name="HardcoreTitle" type="Label" parent="VBoxContainer/ModesContainer/HardcoreMode"]
+layout_mode = 2
+text = "HARDCORE MODE"
+horizontal_alignment = 1
+theme_override_font_sizes/font_size = 28
+
+[node name="HardcoreDesc" type="Label" parent="VBoxContainer/ModesContainer/HardcoreMode"]
+custom_minimum_size = Vector2(250, 0)
+layout_mode = 2
+text = "Collect 5 Heart Crystals
+and reach the Escape Area
+without alerting ANY enemy."
+autowrap_mode = 3
+horizontal_alignment = 1
+theme_override_font_sizes/font_size = 16
+
+[node name="HardcoreButton" type="Button" parent="VBoxContainer/ModesContainer/HardcoreMode"]
+layout_mode = 2
+size_flags_horizontal = 4
+text = "PLAY"
+
+[node name="Footer" type="Label" parent="VBoxContainer"]
+layout_mode = 2
+text = "Press ESC to pause"
+horizontal_alignment = 1
+theme_override_font_sizes/font_size = 14
+
+[connection signal="pressed" from="VBoxContainer/ModesContainer/BabyMode/BabyButton" to="." method="_on_baby_button_pressed"]
+[connection signal="pressed" from="VBoxContainer/ModesContainer/HardcoreMode/HardcoreButton" to="." method="_on_hardcore_button_pressed"]
