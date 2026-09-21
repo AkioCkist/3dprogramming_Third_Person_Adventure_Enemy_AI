@@ -14,8 +14,29 @@ var _player
 
 
 func _ready():
+	_setup_icon()
 	# Deferred so the Player has finished its own _ready.
 	_connect_player.call_deferred()
+
+
+func _setup_icon():
+	var hbox = HBoxContainer.new()
+	var column = label.get_parent()
+	var label_index = label.get_index()
+	
+	column.add_child(hbox)
+	column.move_child(hbox, label_index)
+	
+	var icon = TextureRect.new()
+	icon.texture = load("res://icon/health.png")
+	icon.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
+	icon.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_CENTERED
+	icon.custom_minimum_size = Vector2(40, 40)
+	
+	hbox.add_child(icon)
+	
+	column.remove_child(label)
+	hbox.add_child(label)
 
 
 func _connect_player():
@@ -30,7 +51,7 @@ func _connect_player():
 func _on_health_changed(health: int, max_health: int):
 	bar.max_value = max(max_health, 1)
 	bar.value = health
-	label.text = "%d / %d" % [health, max_health]
+	label.text = "HEALTH  %d / %d" % [health, max_health]
 
 	# Fade the fill from green to red as health drops.
 	if bar.has_theme_stylebox_override("fill"):

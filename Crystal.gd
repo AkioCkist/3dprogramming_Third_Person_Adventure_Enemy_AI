@@ -42,6 +42,7 @@ func _on_body_entered(body):
 
 func _take():
 	_taken = true
+	Sound.play("collect")
 	# Deferred: the Area3D is locked while we're inside its body_entered signal.
 	pickup_area.set_deferred("monitoring", false)
 
