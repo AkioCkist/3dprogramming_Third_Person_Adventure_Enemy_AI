@@ -15,6 +15,11 @@ var anim = ANIM_IDLE
 var patrolling = false
 var chasing = false
 var dead = false
+# ALERTED - SET WHEN CRYSTAL COLLECTED, BYPASSES VISION CHECK
+var alerted = false
+# ALERT FORGET TIMER - HOW LONG TO KEEP CHASING AFTER LOSING SIGHT
+var alert_forget_time = 0.0
+const ALERT_FORGET_DURATION = 5.0  # Seconds to forget after losing sight
 
 @onready var player = get_tree().get_nodes_in_group("Player")[0]
 @onready var camera = get_tree().get_nodes_in_group("Camera")[0]
@@ -189,6 +194,25 @@ func update_vision():
 	if dead:
 		return
 
+	# ALERTED ENEMIES USE FORGET TIMER INSTEAD OF IMMEDIATE VISION CHECK
+	if alerted:
+		if can_see_player():
+			# RESET FORGET TIMER WHEN PLAYER IS IN SIGHT
+			alert_forget_time = ALERT_FORGET_DURATION
+		else:
+			# COUNTDOWN FORGET TIMER WHEN PLAYER NOT IN SIGHT
+			if alert_forget_time > 0:
+				alert_forget_time -= get_physics_process_delta_time()
+			else:
+				# FORGET AND RETURN TO PATROL
+				alerted = false
+				alert_forget_time = 0.0
+				on_player_lost()
+		
+		if vision_material:
+			vision_material.albedo_color = vision_color_chase
+		return
+
 	if can_see_player():
 		if not chasing:
 			on_player_spotted()
@@ -320,3 +344,17 @@ func on_player_lost():
 	chasing = false
 	patrolling = false
 	$Timer.start()
+
+
+# CALLED BY GameManager WHEN PLAYER COLLECTS A CRYSTAL - ALERTS THIS ENEMY TO CHASE
+func alert_to_chase(player_node):
+	if dead or chasing:
+		return
+	
+	target = player_node
+	patrolling = false
+	chasing = true
+	alerted = true
+	alert_forget_time = ALERT_FORGET_DURATION
+	$Timer.stop()
+	Sound.play("enemy_spotted")
