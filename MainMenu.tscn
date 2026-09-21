@@ -1,9 +1,9 @@
-[gd_scene load_steps=3 format=3 uid="uid://mainmenu_scene"]
+[gd_scene format=3 uid="uid://daxoxyue73krx"]
 
-[ext_resource type="Script" path="res://MainMenu.gd" id="1_menu"]
-[ext_resource type="Texture2D" uid="uid://ctg7mdq2obhbl" path="res://sky/skybox-day.png" id="2_bg"]
+[ext_resource type="Script" uid="uid://bjhfqfl4qtiq3" path="res://MainMenu.gd" id="1_menu"]
+[ext_resource type="Texture2D" uid="uid://dwfsexru3oqyu" path="res://image/thumb-1920-323810.jpg" id="2_eiy7p"]
 
-[node name="MainMenu" type="Control"]
+[node name="MainMenu" type="Control" unique_id=5300917]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -12,18 +12,18 @@ grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_menu")
 
-[node name="Background" type="TextureRect" parent="."]
+[node name="Background" type="TextureRect" parent="." unique_id=169228172]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-texture = ExtResource("2_bg")
+texture = ExtResource("2_eiy7p")
 expand_mode = 1
 stretch_mode = 6
 
-[node name="DimOverlay" type="ColorRect" parent="."]
+[node name="DimOverlay" type="ColorRect" parent="." unique_id=2103412631]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -32,7 +32,7 @@ grow_horizontal = 2
 grow_vertical = 2
 color = Color(0, 0, 0, 0.6)
 
-[node name="VBoxContainer" type="VBoxContainer" parent="."]
+[node name="VBoxContainer" type="VBoxContainer" parent="." unique_id=990387430]
 layout_mode = 1
 anchors_preset = 14
 anchor_top = 0.5
@@ -44,90 +44,84 @@ grow_horizontal = 2
 grow_vertical = 2
 theme_override_constants/separation = 40
 
-[node name="Title" type="Label" parent="VBoxContainer"]
+[node name="Title" type="Label" parent="VBoxContainer" unique_id=320903951]
 layout_mode = 2
+theme_override_font_sizes/font_size = 72
 text = "CRYSTAL ESCAPE"
 horizontal_alignment = 1
-theme_override_font_sizes/font_size = 72
 
-[node name="Subtitle" type="Label" parent="VBoxContainer"]
+[node name="Subtitle" type="Label" parent="VBoxContainer" unique_id=1418344556]
 layout_mode = 2
+theme_override_font_sizes/font_size = 24
 text = "Select Game Mode"
 horizontal_alignment = 1
-theme_override_font_sizes/font_size = 24
 
-[node name="ModesContainer" type="HBoxContainer" parent="VBoxContainer"]
+[node name="ModesContainer" type="HBoxContainer" parent="VBoxContainer" unique_id=53668494]
 layout_mode = 2
-alignment = 1
 theme_override_constants/separation = 60
+alignment = 1
 
-[node name="BabyMode" type="VBoxContainer" parent="VBoxContainer/ModesContainer"]
+[node name="BabyMode" type="VBoxContainer" parent="VBoxContainer/ModesContainer" unique_id=1750398527]
 layout_mode = 2
 theme_override_constants/separation = 20
 
-[node name="BabyIcon" type="TextureRect" parent="VBoxContainer/ModesContainer/BabyMode"]
+[node name="BabyIcon" type="TextureRect" parent="VBoxContainer/ModesContainer/BabyMode" unique_id=215679955]
 custom_minimum_size = Vector2(120, 120)
 layout_mode = 2
 size_flags_horizontal = 4
 stretch_mode = 4
 
-[node name="BabyTitle" type="Label" parent="VBoxContainer/ModesContainer/BabyMode"]
+[node name="BabyTitle" type="Label" parent="VBoxContainer/ModesContainer/BabyMode" unique_id=1142452810]
 layout_mode = 2
+theme_override_font_sizes/font_size = 28
 text = "BABY MODE"
 horizontal_alignment = 1
-theme_override_font_sizes/font_size = 28
 
-[node name="BabyDesc" type="Label" parent="VBoxContainer/ModesContainer/BabyMode"]
+[node name="BabyDesc" type="Label" parent="VBoxContainer/ModesContainer/BabyMode" unique_id=515923924]
 custom_minimum_size = Vector2(250, 0)
 layout_mode = 2
+theme_override_font_sizes/font_size = 16
 text = "Collect 5 Heart Crystals
 and reach the Escape Area
 without losing all health."
-autowrap_mode = 3
 horizontal_alignment = 1
-theme_override_font_sizes/font_size = 16
+autowrap_mode = 3
 
-[node name="BabyButton" type="Button" parent="VBoxContainer/ModesContainer/BabyMode"]
+[node name="BabyButton" type="Button" parent="VBoxContainer/ModesContainer/BabyMode" unique_id=1761345199]
 layout_mode = 2
 size_flags_horizontal = 4
 text = "PLAY"
 
-[node name="HardcoreMode" type="VBoxContainer" parent="VBoxContainer/ModesContainer"]
+[node name="HardcoreMode" type="VBoxContainer" parent="VBoxContainer/ModesContainer" unique_id=1059797581]
 layout_mode = 2
 theme_override_constants/separation = 20
 
-[node name="HardcoreIcon" type="TextureRect" parent="VBoxContainer/ModesContainer/HardcoreMode"]
+[node name="HardcoreIcon" type="TextureRect" parent="VBoxContainer/ModesContainer/HardcoreMode" unique_id=1623882786]
 custom_minimum_size = Vector2(120, 120)
 layout_mode = 2
 size_flags_horizontal = 4
 stretch_mode = 4
 
-[node name="HardcoreTitle" type="Label" parent="VBoxContainer/ModesContainer/HardcoreMode"]
+[node name="HardcoreTitle" type="Label" parent="VBoxContainer/ModesContainer/HardcoreMode" unique_id=268418029]
 layout_mode = 2
+theme_override_font_sizes/font_size = 28
 text = "HARDCORE MODE"
 horizontal_alignment = 1
-theme_override_font_sizes/font_size = 28
 
-[node name="HardcoreDesc" type="Label" parent="VBoxContainer/ModesContainer/HardcoreMode"]
+[node name="HardcoreDesc" type="Label" parent="VBoxContainer/ModesContainer/HardcoreMode" unique_id=98920754]
 custom_minimum_size = Vector2(250, 0)
 layout_mode = 2
+theme_override_font_sizes/font_size = 16
 text = "Collect 5 Heart Crystals
 and reach the Escape Area
 without alerting ANY enemy."
-autowrap_mode = 3
 horizontal_alignment = 1
-theme_override_font_sizes/font_size = 16
+autowrap_mode = 3
 
-[node name="HardcoreButton" type="Button" parent="VBoxContainer/ModesContainer/HardcoreMode"]
+[node name="HardcoreButton" type="Button" parent="VBoxContainer/ModesContainer/HardcoreMode" unique_id=1560755364]
 layout_mode = 2
 size_flags_horizontal = 4
 text = "PLAY"
-
-[node name="Footer" type="Label" parent="VBoxContainer"]
-layout_mode = 2
-text = "Press ESC to pause"
-horizontal_alignment = 1
-theme_override_font_sizes/font_size = 14
 
 [connection signal="pressed" from="VBoxContainer/ModesContainer/BabyMode/BabyButton" to="." method="_on_baby_button_pressed"]
 [connection signal="pressed" from="VBoxContainer/ModesContainer/HardcoreMode/HardcoreButton" to="." method="_on_hardcore_button_pressed"]
